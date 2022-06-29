@@ -270,7 +270,7 @@ ExecStart=/__YOUR_USER__/__PROJECT_FOLDER__/venv/bin/gunicorn \
 WantedBy=multi-user.target
 ```
 
-# Agora vamos ativar
+### Agora vamos ativar
 ```
 sudo systemctl start __GUNICORN_FILE_NAME__.socket`
 ```
@@ -278,7 +278,7 @@ sudo systemctl start __GUNICORN_FILE_NAME__.socket`
 sudo systemctl enable __GUNICORN_FILE_NAME__.socket
 ```
 
-# Verifique se tudo deu certo
+### Verifique se tudo deu certo
 ```
 sudo systemctl status __GUNICORN_FILE_NAME__.socket
 ```
@@ -289,7 +289,7 @@ curl --unix-socket /run/__GUNICORN_FILE_NAME__.socket localhost
 sudo systemctl status __GUNICORN_FILE_NAME__
 ```
 
-# Reinicie 
+### Reinicie 
 ```
 sudo systemctl restart __GUNICORN_FILE_NAME__.service
 ```
@@ -305,7 +305,7 @@ sudo systemctl restart __GUNICORN_FILE_NAME__
 sudo systemctl daemon-reload
 ```
 
-# Debugging
+### Debugging
 ```
 sudo journalctl -u __GUNICORN_FILE_NAME__.service
 ```
