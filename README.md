@@ -25,18 +25,3 @@ sudo apt install build-essential -y
 ```
 sudo apt install python3-pip python3-dev libpq-dev
 ```
-```
-sudo apt install nginx -y
-```
-```
-sudo apt install certbot python3-certbot-nginx -y
-```
-```
-sudo apt install postgresql postgresql-contrib -y
-```
-```
-sudo apt install libpq-dev -y
-```
-```
-sudo apt install git
-```
