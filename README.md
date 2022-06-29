@@ -10,22 +10,29 @@ ssh root@ip_da_vps
 
 ## 2 - Instalando os pacotes e atualizções necessárias
 
-```bash
-$ sudo apt update -y
-
-$ sudo apt upgrade -y
-
-$ sudo apt autoremove -y
-
-$ sudo apt install build-essential -y
-
-$ sudo apt install python3-pip python3-dev libpq-dev
-
-$ postgresq postgresql-contrib nginx curl
-
-$ sudo apt install certbot python3-certbot-nginx -y
-
-$ sudo apt install git
+```
+sudo apt update -y
+```
+```
+sudo apt upgrade -y
+```
+```
+sudo apt autoremove -y
+```
+```
+sudo apt install build-essential -y
+```
+```
+sudo apt install python3-pip python3-dev libpq-dev 
+```
+```
+postgresql postgresql-contrib nginx curl
+```
+```
+sudo apt install certbot python3-certbot-nginx -y
+```
+```
+sudo apt install git
 ```
 
 ## 3 - Criando o banco de dados e o usuário PostgreSQL
