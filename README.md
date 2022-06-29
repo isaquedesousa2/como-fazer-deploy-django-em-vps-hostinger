@@ -33,7 +33,7 @@ sudo apt install git
 ```
 
 ## 3 - Criando o banco de dados e o usuário PostgreSQL
-# Faça login em uma sessão interativa do Postgres digitando
+### Faça login em uma sessão interativa do Postgres digitando
 
 ```
 sudo -u postgres psql
