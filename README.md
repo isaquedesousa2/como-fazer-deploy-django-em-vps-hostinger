@@ -10,26 +10,20 @@ ssh root@ip_da_vps
 
 ## 2 - Instalando os pacotes e atualizções necessárias
 
-```
-sudo apt update -y
-```
-```
-sudo apt upgrade -y
-```
-```
-sudo apt autoremove -y
-```
-```
-sudo apt install build-essential -y
-```
-```
-sudo apt install python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx curl
-```
-```
-sudo apt install certbot python3-certbot-nginx -y
-```
-```
-sudo apt install git
+```bash
+$ sudo apt update -y
+
+$ sudo apt upgrade -y
+
+$ sudo apt autoremove -y
+
+$ sudo apt install build-essential -y
+
+$ sudo apt install python3-pip python3-dev libpq-dev postgresq postgresql-contrib nginx curl
+
+$ sudo apt install certbot python3-certbot-nginx -y
+
+$ sudo apt install git
 ```
 
 ## 3 - Criando o banco de dados e o usuário PostgreSQL
@@ -60,7 +54,7 @@ ALTER ROLE nomedousuário SET timezone TO 'UTC';
 ```
 ### Agora vamos da acesso ao novo usuário para administrar o novo banco de dados
 ```
-GRANT ALL PRIVILEGES ON DATABASE nomedobanco TO usuário;
+GRANT ALL PRIVILEGES ON DATABASE nomedobanco TO nomedousuário;
 ```
 ### Saia do prompt do PostgreSQL
 ```
