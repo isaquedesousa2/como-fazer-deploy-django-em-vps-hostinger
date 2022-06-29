@@ -211,13 +211,12 @@ python manage.py runserver
 #### __WSGI_FOLDER__ to the folder name where you find a file called wsgi.py
 
 
-#### Criando o arquivo __GUNICORN_FILE_NAME__.socket
+#### Crie o arquivo __GUNICORN_FILE_NAME__.socket
 ```
 sudo nano /etc/systemd/system/__GUNICORN_FILE_NAME__.socket
 ```
 ### Coloque esse conteúdo e salve
 
-#### Conteúdo do arquivo
 ```
 [Unit]
 Description=gunicorn blog socket
@@ -229,13 +228,12 @@ ListenStream=/run/__GUNICORN_FILE_NAME__.socket
 WantedBy=sockets.target
 ```
 
-# Criando o arquivo __GUNICORN_FILE_NAME__.service
+### Crie o arquivo __GUNICORN_FILE_NAME__.service
 ```
 sudo nano /etc/systemd/system/__GUNICORN_FILE_NAME__.service
 ```
 ### Coloque esse conteúdo e salve
 
-# Conteúdo do arquivo
 ```
 [Unit]
 Description=Gunicorn daemon
