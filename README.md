@@ -205,11 +205,11 @@ python manage.py runserver
 # 8 - Vamos criar agora o unix.socket e configurar o gunicorn
 
 ### Subistitua
-```
+
 ### __GUNICORN_FILE_NAME__ para o nome do arquivo gunicorn que você deseja
 ### __YOUR_USER__ to your user name
 ### __WSGI_FOLDER__ to the folder name where you find a file called wsgi.py
-```
+
 
 ### Criando o arquivo __GUNICORN_FILE_NAME__.socket
 sudo nano /etc/systemd/system/__GUNICORN_FILE_NAME__.socket
