@@ -194,3 +194,10 @@ cp .env-example .env
 ```
 nano .env
 ```
+### Com a aplicação conectada ao postgres faça as migrações
+```
+python manage.py migrate
+```
+```
+python manage.py runserver
+```
