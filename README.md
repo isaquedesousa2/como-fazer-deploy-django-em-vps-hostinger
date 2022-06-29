@@ -206,16 +206,18 @@ python manage.py runserver
 
 ### Subistitua
 
-### __GUNICORN_FILE_NAME__ para o nome do arquivo gunicorn que você deseja
-### __YOUR_USER__ to your user name
-### __WSGI_FOLDER__ to the folder name where you find a file called wsgi.py
+#### __GUNICORN_FILE_NAME__ para o nome do arquivo gunicorn que você deseja
+#### __YOUR_USER__ to your user name
+#### __WSGI_FOLDER__ to the folder name where you find a file called wsgi.py
 
 
-### Criando o arquivo __GUNICORN_FILE_NAME__.socket
+#### Criando o arquivo __GUNICORN_FILE_NAME__.socket
+```
 sudo nano /etc/systemd/system/__GUNICORN_FILE_NAME__.socket
+```
+### Coloque esse conteúdo e salve
 
-###############################################################################
-# Conteúdo do arquivo
+#### Conteúdo do arquivo
 [Unit]
 Description=gunicorn blog socket
 
@@ -225,14 +227,15 @@ ListenStream=/run/__GUNICORN_FILE_NAME__.socket
 [Install]
 WantedBy=sockets.target
 
-###############################################################################
 # Criando o arquivo __GUNICORN_FILE_NAME__.service
+```
 sudo nano /etc/systemd/system/__GUNICORN_FILE_NAME__.service
+```
+### Coloque esse conteúdo e salve
 
-###############################################################################
 # Conteúdo do arquivo
 [Unit]
-Description=Gunicorn daemon (You can change if you want)
+Description=Gunicorn daemon
 Requires=__GUNICORN_FILE_NAME__.socket
 After=network.target
 
@@ -256,24 +259,45 @@ ExecStart=/__YOUR_USER__/__PROJECT_FOLDER__/venv/bin/gunicorn \
 [Install]
 WantedBy=multi-user.target
 
-###############################################################################
-# Ativando
-sudo systemctl start __GUNICORN_FILE_NAME__.socket
+# Agora vamos ativar
+```
+sudo systemctl start __GUNICORN_FILE_NAME__.socket`
+```
+```
 sudo systemctl enable __GUNICORN_FILE_NAME__.socket
+```
 
-# Checando
+# Verifique se tudo deu certo
+```
 sudo systemctl status __GUNICORN_FILE_NAME__.socket
+```
+```
 curl --unix-socket /run/__GUNICORN_FILE_NAME__.socket localhost
+```
+```
 sudo systemctl status __GUNICORN_FILE_NAME__
+```
 
-# Reiniciando
+# Reinicie 
+```
 sudo systemctl restart __GUNICORN_FILE_NAME__.service
+```
+```
 sudo systemctl restart __GUNICORN_FILE_NAME__.socket
+```
+```
 sudo systemctl restart __GUNICORN_FILE_NAME__
+```
 
-# After changing something
+### Se você precisar alterar algum arquivo rode esse comando para recarega os arquivos
+```
 sudo systemctl daemon-reload
+```
 
 # Debugging
+```
 sudo journalctl -u __GUNICORN_FILE_NAME__.service
+```
+```
 sudo journalctl -u __GUNICORN_FILE_NAME__.socket
+```
