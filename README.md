@@ -5,5 +5,4 @@
 
 ```brash
 ssh root@<ip_da_vps>
-
 ```
