@@ -1,7 +1,8 @@
 # COMO FAZER DEPLOY DJANGO EM VPS HOSTIGER
 
+# Abra seu prompt de comando
+
 ## 1 - Conecte-se a vps
-### Abra seu prompt de comando
 
 ```
 ssh root@<ip_da_vps>
