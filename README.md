@@ -48,7 +48,7 @@ CREATE DATABASE nomedobanco;
 ```
 CREATE USER nomedousuário WITH PASSWORD 'suasenha';
 ```
-#### Modifique alguns parâmetros de conexão para o usuário que acabamos de criar
+### Modifique alguns parâmetros de conexão para o usuário que acabamos de criar
 ```
 ALTER ROLE nomedousuário SET client_encoding TO 'utf8';
 ```
@@ -134,4 +134,28 @@ cd ~/app_repo
 ```
 ```
 git pull origin <branch>
+```
+
+# 6 - Crie um ambiente virtual
+
+```
+cd  ~/app_repo
+```
+```
+git pull origin <branch>
+```
+```
+python3 -m venv venv
+```
+```
+. venv/bin/activate
+```
+```
+pip install -r requirements.txt
+```
+```
+pip install psycopg2
+```
+```
+pip install gunicorn
 ```
