@@ -23,7 +23,7 @@ sudo apt autoremove -y
 sudo apt install build-essential -y
 ```
 ```
-sudo apt install python3.9 python3.9-venv python3.9-dev -y
+sudo apt install python3-pip python3-dev libpq-dev
 ```
 ```
 sudo apt install nginx -y
