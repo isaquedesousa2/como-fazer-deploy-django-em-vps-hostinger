@@ -174,12 +174,12 @@ pip install psycopg2
 pip install gunicorn
 ```
 
-## Agora se tudo deu certo quando rodamos esse comando é para o servidor subir
+### Agora se tudo deu certo quando rodamos esse comando é para o servidor subir
 ```
 python manage.py runserver
 ```
 
-# 7 - conectar o banco de dados com a aplicação
+# 7 - Conectar o banco de dados com a aplicação
 
 ### Crie suas variaveis de ambiente e salve em um arquivo, por exemplo .env-example
 
@@ -207,8 +207,9 @@ python manage.py runserver
 ### Subistitua
 
 #### __GUNICORN_FILE_NAME__ para o nome do arquivo gunicorn que você deseja
-#### __YOUR_USER__ to your user name
-#### __WSGI_FOLDER__ to the folder name where you find a file called wsgi.py
+#### __YOUR_USER__ para seu nome de usuário
+#### __PROJECT_FOLDER__ para o nome da pasta do seu projeto (app_repo_nomedoprojeto)
+#### __WSGI_FOLDER__ para o nome da pasta onde você encontra um arquivo chamado wsgi.py
 
 
 #### Crie o arquivo __GUNICORN_FILE_NAME__.socket
