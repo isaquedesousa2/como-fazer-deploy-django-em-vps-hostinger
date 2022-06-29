@@ -209,18 +209,18 @@ python manage.py runserver
 ```
 __GUNICORN_FILE_NAME__ para o nome do arquivo gunicorn que você deseja
 ```
-#### Você pode conferir seu nome de usuário com esse comando
+### Você pode conferir seu nome de usuário com esse comando
 ```
 whoami
 ```
 ```
 __YOUR_USER__ para seu nome de usuário
 ```
-#### No caso seria app_repo_nomedoprojeto
+### No caso seria app_repo_nomedoprojeto
 ```
 __PROJECT_FOLDER__ para o nome da pasta do seu projeto repo
 ```
-#### Seria a pasta do seu projeto django
+### Seria a pasta do seu projeto django
 ```
 __WSGI_FOLDER__ para o nome da pasta onde você encontra um arquivo chamado wsgi.py
 ```
@@ -271,7 +271,7 @@ WantedBy=multi-user.target
 
 ### Agora vamos ativar
 ```
-sudo systemctl start __GUNICORN_FILE_NAME__.socket`
+sudo systemctl start __GUNICORN_FILE_NAME__.socket
 ```
 ```
 sudo systemctl enable __GUNICORN_FILE_NAME__.socket
@@ -293,18 +293,17 @@ sudo systemctl status __GUNICORN_FILE_NAME__
 file /run/__GUNICORN_FILE_NAME__.sock
 ```
 
-### Se o systemctl status ou curl indicou erro você pode usar esse comando para saber o que aconteceu 
-```
-sudo journalctl -u __GUNICORN_FILE_NAME__.socket
-```
-
 ### Execute esse comando para enviar uma conexção ao socket curl, em seguir você deve receber a saída HTML do seu aplicativo no terminal
 ```
 curl --unix-socket /run/__GUNICORN_FILE_NAME__.socket localhost
 ```
 
+### Se o systemctl status ou curl indicou erro você pode usar esse comando para saber o que aconteceu 
+```
+sudo journalctl -u __GUNICORN_FILE_NAME__.socket
+```
 
-### Reinicie 
+### Se precisar reiniciar
 ```
 sudo systemctl restart __GUNICORN_FILE_NAME__.service
 ```
@@ -323,12 +322,103 @@ sudo systemctl daemon-reload
 sudo systemctl restart gunicorn
 ```
 
-
-
-### Debugging
+### Para debugar
 ```
 sudo journalctl -u __GUNICORN_FILE_NAME__.service
 ```
 ```
 sudo journalctl -u __GUNICORN_FILE_NAME__.socket
+```
+
+# 9 - Confugurando o Nginx
+
+### Subistitua
+
+```
+____REPLACE_ME_WITH_YOUR_OWN_DOMAIN____ = Replace with your domain
+```
+```
+___PROJECT_FOLDER___ = Replace with the path to the folder for the project
+```
+```
+___STATIC_FOLDER_PATH___ = Replace with the path to the folder for static files
+```
+```
+___MEDIA_FOLDER_PATH___ = Replace with the path to the folder for media files
+```
+```
+___SOCKET_NAME___ = Replace with your unix socket name
+```
+
+# Set timezone
+# List - timedatectl list-timezones
+# sudo timedatectl set-timezone America/Sao_Paulo
+
+```
+server {
+  listen 80;
+  listen [::]:80;
+  server_name ____REPLACE_ME_WITH_YOUR_OWN_DOMAIN____;
+
+  index index.html index.htm index.nginx-debian.html index.php;
+  
+  # ATTENTION: ___STATIC_FOLDER_PATH___
+  location /static {
+    autoindex on;
+    alias ___STATIC_FOLDER_PATH___;
+  }
+
+  # ATTENTION: ___MEDIA_FOLDER_PATH___ 
+  location /media {
+    autoindex on;
+    alias ___MEDIA_FOLDER_PATH___;
+  }
+
+  # ATTENTION: ___SOCKET_NAME___
+  location / {
+    proxy_pass http://unix:/run/___SOCKET_NAME___;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection 'upgrade';
+    proxy_set_header Host $host;
+    proxy_cache_bypass $http_upgrade;
+  }
+
+  # deny access to .htaccess files, if Apache's document root
+  # concurs with nginx's one
+  #
+  location ~ /\.ht {
+    deny all;
+  }
+
+  location ~ /\. {
+    access_log off;
+    log_not_found off;
+    deny all;
+  }
+
+  gzip on;
+  gzip_disable "msie6";
+
+  gzip_comp_level 6;
+  gzip_min_length 1100;
+  gzip_buffers 4 32k;
+  gzip_proxied any;
+  gzip_types
+    text/plain
+    text/css
+    text/js
+    text/xml
+    text/javascript
+    application/javascript
+    application/x-javascript
+    application/json
+    application/xml
+    application/rss+xml
+    image/svg+xml;
+
+  access_log off;
+ 
+  error_log   /var/log/nginx/____REPLACE_ME_WITH_YOUR_OWN_DOMAIN____-error.log;
+}
 ```
