@@ -218,6 +218,7 @@ sudo nano /etc/systemd/system/__GUNICORN_FILE_NAME__.socket
 ### Coloque esse conteúdo e salve
 
 #### Conteúdo do arquivo
+```
 [Unit]
 Description=gunicorn blog socket
 
@@ -226,6 +227,7 @@ ListenStream=/run/__GUNICORN_FILE_NAME__.socket
 
 [Install]
 WantedBy=sockets.target
+```
 
 # Criando o arquivo __GUNICORN_FILE_NAME__.service
 ```
@@ -234,6 +236,7 @@ sudo nano /etc/systemd/system/__GUNICORN_FILE_NAME__.service
 ### Coloque esse conteúdo e salve
 
 # Conteúdo do arquivo
+```
 [Unit]
 Description=Gunicorn daemon
 Requires=__GUNICORN_FILE_NAME__.socket
@@ -258,6 +261,7 @@ ExecStart=/__YOUR_USER__/__PROJECT_FOLDER__/venv/bin/gunicorn \
 
 [Install]
 WantedBy=multi-user.target
+```
 
 # Agora vamos ativar
 ```
