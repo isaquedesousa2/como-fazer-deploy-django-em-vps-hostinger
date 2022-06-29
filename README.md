@@ -41,7 +41,7 @@ sudo -u postgres psql
 ### Crie o banco de dados
 
 ```
-CREATE DATABASE nomedoprojeto;
+CREATE DATABASE nomedobanco;
 ```
 ### Crie um usuário de banco de dados
 ```
@@ -57,3 +57,13 @@ ALTER ROLE usuário SET default_transaction_isolation TO 'read committed';
 ```
 ALTER ROLE usuário SET timezone TO 'UTC';
 ```
+### Agora vamos da acesso ao novo usuário para administrar o novo banco de dados
+```
+GRANT ALL PRIVILEGES ON DATABASE nomedobanco TO usuário;
+```
+### Saia do prompt do PostgreSQL
+```
+\q
+```
+
+### 4 - Agora vamos subir a aplicação para vps
