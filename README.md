@@ -218,9 +218,9 @@ __YOUR_USER__ para seu nome de usuário
 ```
 #### No caso seria app_repo_nomedoprojeto
 ```
-__PROJECT_FOLDER__ para o nome da pasta do seu projeto
+__PROJECT_FOLDER__ para o nome da pasta do seu projeto repo
 ```
-
+#### Seria a pasta do seu projeto django
 ```
 __WSGI_FOLDER__ para o nome da pasta onde você encontra um arquivo chamado wsgi.py
 ```
@@ -243,7 +243,7 @@ ListenStream=/run/__GUNICORN_FILE_NAME__.socket
 WantedBy=sockets.target
 ```
 
-### Crie o arquivo __GUNICORN_FILE_NAME__.service
+### Crie o arquivo __PROJECT_FOLDER__.service
 ```
 sudo nano /etc/systemd/system/__GUNICORN_FILE_NAME__.service
 ```
@@ -251,25 +251,18 @@ sudo nano /etc/systemd/system/__GUNICORN_FILE_NAME__.service
 
 ```
 [Unit]
-Description=Gunicorn daemon
+Description=gunicorn daemon
 Requires=__GUNICORN_FILE_NAME__.socket
 After=network.target
 
 [Service]
 User=__YOUR_USER__
 Group=www-data
-Restart=on-failure
-EnvironmentFile=/__YOUR_USER__/__PROJECT_FOLDER__/.env
 WorkingDirectory=/__YOUR_USER__/__PROJECT_FOLDER__
-
 ExecStart=/__YOUR_USER__/__PROJECT_FOLDER__/venv/bin/gunicorn \
-          --error-logfile /__YOUR_USER__/__PROJECT_FOLDER__/gunicorn-error-log \
-          --enable-stdio-inheritance \
-          --log-level "debug" \
-          --capture-output \
           --access-logfile - \
-          --workers 6 \
-          --bind unix:/run/__GUNICORN_FILE_NAME__.socket \
+          --workers 3 \
+          --bind unix:/run/__PROJECT_FOLDER__.sock \
           __WSGI_FOLDER__.wsgi:application
 
 [Install]
@@ -289,11 +282,27 @@ sudo systemctl enable __GUNICORN_FILE_NAME__.socket
 sudo systemctl status __GUNICORN_FILE_NAME__.socket
 ```
 ```
-curl --unix-socket /run/__GUNICORN_FILE_NAME__.socket localhost
+sudo systemctl status __GUNICORN_FILE_NAME__.service
 ```
 ```
 sudo systemctl status __GUNICORN_FILE_NAME__
+
 ```
+### Verifique a existência do gunicorn.sock arquivo dentro do /run
+```
+file /run/__GUNICORN_FILE_NAME__.sock
+```
+
+### Se o systemctl status ou curl indicou erro você pode usar esse comando para saber o que aconteceu 
+```
+sudo journalctl -u __GUNICORN_FILE_NAME__.socket
+```
+
+### Execute esse comando para enviar uma conexção ao socket curl, em seguir você deve receber a saída HTML do seu aplicativo no terminal
+```
+curl --unix-socket /run/__GUNICORN_FILE_NAME__.socket localhost
+```
+
 
 ### Reinicie 
 ```
@@ -310,6 +319,11 @@ sudo systemctl restart __GUNICORN_FILE_NAME__
 ```
 sudo systemctl daemon-reload
 ```
+```
+sudo systemctl restart gunicorn
+```
+
+
 
 ### Debugging
 ```
