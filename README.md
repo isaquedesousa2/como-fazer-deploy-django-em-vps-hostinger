@@ -104,16 +104,16 @@ cd ..
 ```
 ### Crie o repositório da aplicação
 ```
-mkdir -p ~/app_repo
+mkdir -p ~/app_repo_nomedoprojeto
 ```
 ```
-cd ~/app_repo
+cd ~/app_repo_nomedoprojeto
 ```
 ```
 git init
 ```
 ```
-git remote add origin ~/app_bare
+git remote add origin ~/app_bare_nomedoprojeto
 ```
 ```
 git add . 
@@ -133,7 +133,7 @@ git push app_bare <branch>
 ```
 ### No servidor, em app_repo, faça pull:
 ```
-cd ~/app_repo
+cd ~/app_repo_nomedoprojeto
 ```
 ```
 git pull origin <branch>
@@ -142,7 +142,7 @@ git pull origin <branch>
 # 6 - Crie um ambiente virtual
 
 ```
-cd  ~/app_repo
+cd  ~/app_repo_nomedoprojeto
 ```
 ```
 git pull origin <branch>
