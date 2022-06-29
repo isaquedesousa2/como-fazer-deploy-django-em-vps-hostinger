@@ -5,7 +5,7 @@
 ## 1 - Conecte-se a vps
 
 ```
-ssh root@<ip_da_vps>
+ssh root@ip_da_vps
 ```
 
 ## 2 - Instalando os pacotes e atualizções necessárias
@@ -66,5 +66,72 @@ GRANT ALL PRIVILEGES ON DATABASE nomedobanco TO usuário;
 ```
 \q
 ```
+### Reinicie o postgres
+```
+sudo systemctl restart postgresql
+```
 
-### 4 - Agora vamos subir a aplicação para vps
+### 4 - Configure o git
+
+```
+git config --global user.name 'Seu nome'
+```
+```
+git config --global user.email 'seu_email@gmail.com'
+```
+```
+git config --global init.defaultBranch main
+```
+
+# 5 - Crie um repositório no servidor 
+
+### Um repositório bare é um repositório transitório (como se fosse um github).
+
+```
+mkdir -p ~/app_bare_nomedoprojeto
+```
+```
+cd ~/app_bare
+```
+```
+git init --bare
+```
+```
+cd ..
+```
+### Crie o repositório da aplicação
+```
+mkdir -p ~/app_repo
+```
+```
+cd ~/app_repo
+```
+```
+git init
+```
+```
+git remote add origin ~/app_bare
+```
+```
+git add . 
+```
+```
+git commit -m 'Initial'
+```
+```
+cd ..
+```
+### No seu computador local, adicione o bare como remoto
+```
+git remote add app_bare root@ip_da_vps:~/app_bare
+```
+```
+git push app_bare <branch>
+```
+### No servidor, em app_repo, faça pull:
+```
+cd ~/app_repo
+```
+```
+git pull origin <branch>
+```
