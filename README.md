@@ -334,30 +334,31 @@ sudo journalctl -u __GUNICORN_FILE_NAME__.socket
 
 ### Subistitua
 
+### Substitua pelo seu domínio
+
 ```
 ___REPLACE_ME_WITH_YOUR_OWN_DOMAIN___ 
 
-Substitua pelo seu domínio
 ```
+### Substitua pelo caminho para a pasta do projeto
 ```
 ___PROJECT_FOLDER___ 
 
-Substitua pelo caminho para a pasta do projeto
 ```
+### Substitua pelo caminho para a pasta de arquivos estáticos
 ```
 ___STATIC_FOLDER_PATH___ 
 
-Substitua pelo caminho para a pasta de arquivos estáticos
 ```
+### Substitua pelo caminho para a pasta de arquivos de mídia
 ```
 ___MEDIA_FOLDER_PATH___ 
 
-Substitua pelo caminho para a pasta de arquivos de mídia
 ```
+### Substitua pelo nome do soquete unix
 ```
 ___SOCKET_NAME___ 
 
-Substitua pelo nome do soquete unix
 ```
 
 ```
