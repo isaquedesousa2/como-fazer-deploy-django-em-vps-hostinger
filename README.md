@@ -211,6 +211,8 @@ __GUNICORN_FILE_NAME__ para o nome do arquivo gunicorn que você deseja
 ```
 ```
 __YOUR_USER__ para seu nome de usuário
+# Você pode conferir seu nome de usuário com esse comando
+whoami
 ```
 ```
 __PROJECT_FOLDER__ para o nome da pasta do seu projeto (app_repo_nomedoprojeto)
