@@ -204,16 +204,15 @@ python manage.py runserver
 
 # 8 - Vamos criar agora o unix.socket e configurar o gunicorn
 
-###############################################################################
-# Replace
-# ___GUNICORN_FILE_NAME___ to the name of the gunicorn file you want
-# __YOUR_USER__ to your user name
-# __PROJECT_FOLDER__ to the folder name of your project
-# __WSGI_FOLDER__ to the folder name where you find a file called wsgi.py
-#
-###############################################################################
-# Criando o arquivo ___GUNICORN_FILE_NAME___.socket
-sudo nano /etc/systemd/system/___GUNICORN_FILE_NAME___.socket
+### Subistitua
+```
+### __GUNICORN_FILE_NAME__ para o nome do arquivo gunicorn que você deseja
+### __YOUR_USER__ to your user name
+### __WSGI_FOLDER__ to the folder name where you find a file called wsgi.py
+```
+
+### Criando o arquivo __GUNICORN_FILE_NAME__.socket
+sudo nano /etc/systemd/system/__GUNICORN_FILE_NAME__.socket
 
 ###############################################################################
 # Conteúdo do arquivo
@@ -221,20 +220,20 @@ sudo nano /etc/systemd/system/___GUNICORN_FILE_NAME___.socket
 Description=gunicorn blog socket
 
 [Socket]
-ListenStream=/run/___GUNICORN_FILE_NAME___.socket
+ListenStream=/run/__GUNICORN_FILE_NAME__.socket
 
 [Install]
 WantedBy=sockets.target
 
 ###############################################################################
-# Criando o arquivo ___GUNICORN_FILE_NAME___.service
-sudo nano /etc/systemd/system/___GUNICORN_FILE_NAME___.service
+# Criando o arquivo __GUNICORN_FILE_NAME__.service
+sudo nano /etc/systemd/system/__GUNICORN_FILE_NAME__.service
 
 ###############################################################################
 # Conteúdo do arquivo
 [Unit]
 Description=Gunicorn daemon (You can change if you want)
-Requires=___GUNICORN_FILE_NAME___.socket
+Requires=__GUNICORN_FILE_NAME__.socket
 After=network.target
 
 [Service]
@@ -251,7 +250,7 @@ ExecStart=/__YOUR_USER__/__PROJECT_FOLDER__/venv/bin/gunicorn \
           --capture-output \
           --access-logfile - \
           --workers 6 \
-          --bind unix:/run/___GUNICORN_FILE_NAME___.socket \
+          --bind unix:/run/__GUNICORN_FILE_NAME__.socket \
           __WSGI_FOLDER__.wsgi:application
 
 [Install]
@@ -259,22 +258,22 @@ WantedBy=multi-user.target
 
 ###############################################################################
 # Ativando
-sudo systemctl start ___GUNICORN_FILE_NAME___.socket
-sudo systemctl enable ___GUNICORN_FILE_NAME___.socket
+sudo systemctl start __GUNICORN_FILE_NAME__.socket
+sudo systemctl enable __GUNICORN_FILE_NAME__.socket
 
 # Checando
-sudo systemctl status ___GUNICORN_FILE_NAME___.socket
-curl --unix-socket /run/___GUNICORN_FILE_NAME___.socket localhost
-sudo systemctl status ___GUNICORN_FILE_NAME___
+sudo systemctl status __GUNICORN_FILE_NAME__.socket
+curl --unix-socket /run/__GUNICORN_FILE_NAME__.socket localhost
+sudo systemctl status __GUNICORN_FILE_NAME__
 
 # Reiniciando
-sudo systemctl restart ___GUNICORN_FILE_NAME___.service
-sudo systemctl restart ___GUNICORN_FILE_NAME___.socket
-sudo systemctl restart ___GUNICORN_FILE_NAME___
+sudo systemctl restart __GUNICORN_FILE_NAME__.service
+sudo systemctl restart __GUNICORN_FILE_NAME__.socket
+sudo systemctl restart __GUNICORN_FILE_NAME__
 
 # After changing something
 sudo systemctl daemon-reload
 
 # Debugging
-sudo journalctl -u ___GUNICORN_FILE_NAME___.service
-sudo journalctl -u ___GUNICORN_FILE_NAME___.socket
+sudo journalctl -u __GUNICORN_FILE_NAME__.service
+sudo journalctl -u __GUNICORN_FILE_NAME__.socket
