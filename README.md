@@ -46,17 +46,17 @@ CREATE DATABASE nomedobanco;
 ```
 ### Crie um usuário de banco de dados
 ```
-CREATE USER usuário WITH PASSWORD 'senha';
+CREATE USER nomedousuário WITH PASSWORD 'suasenha';
 ```
 ### Modifique alguns parâmetros de conexão para o usuário que acabamos de criar
 ```
-ALTER ROLE usuário SET client_encoding TO 'utf8';
+ALTER ROLE nomedousuário SET client_encoding TO 'utf8';
 ```
 ```
-ALTER ROLE usuário SET default_transaction_isolation TO 'read committed';
+ALTER ROLE nomedousuário SET default_transaction_isolation TO 'read committed';
 ```
 ```
-ALTER ROLE usuário SET timezone TO 'UTC';
+ALTER ROLE nomedousuário SET timezone TO 'UTC';
 ```
 ### Agora vamos da acesso ao novo usuário para administrar o novo banco de dados
 ```
