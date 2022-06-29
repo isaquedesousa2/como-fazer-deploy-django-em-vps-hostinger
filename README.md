@@ -19,7 +19,9 @@ $ sudo apt autoremove -y
 
 $ sudo apt install build-essential -y
 
-$ sudo apt install python3-pip python3-dev libpq-dev postgresq postgresql-contrib nginx curl
+$ sudo apt install python3-pip python3-dev libpq-dev
+
+$ postgresq postgresql-contrib nginx curl
 
 $ sudo apt install certbot python3-certbot-nginx -y
 
