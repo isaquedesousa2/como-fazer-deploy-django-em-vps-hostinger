@@ -151,8 +151,25 @@ python3 -m venv venv
 pip install -r requirements.txt
 ```
 ```
-pip install psycopg2-binary
+pip install psycopg2 psycopg2-binary
 ```
+### Se de erro ao instalar o psycopg2 executer esses comandos
+```
+pip uninstall psycopg2
+```
+```
+pip list --outdated
+```
+```
+pip install --upgrade wheel
+```
+```
+pip install --upgrade setuptools
+```
+```
+pip install psycopg2
+```
+### Pronto agora é para ter dado tudo certo na instalação do psycopg2
 ```
 pip install gunicorn
 ```
