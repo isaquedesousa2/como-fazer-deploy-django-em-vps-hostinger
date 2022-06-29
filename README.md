@@ -220,7 +220,7 @@ __WSGI_FOLDER__ para o nome da pasta onde você encontra um arquivo chamado wsgi
 ```
 
 
-#### Crie o arquivo __GUNICORN_FILE_NAME__.socket
+### Crie o arquivo __GUNICORN_FILE_NAME__.socket
 ```
 sudo nano /etc/systemd/system/__GUNICORN_FILE_NAME__.socket
 ```
