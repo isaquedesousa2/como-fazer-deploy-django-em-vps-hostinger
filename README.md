@@ -23,7 +23,7 @@ sudo apt autoremove -y
 sudo apt install build-essential -y
 ```
 ```
-sudo apt install python3-pip python3-dev libpq-dev 
+sudo apt install python3-pip python3-dev libpq-dev python3-venv
 ```
 ```
 postgresql postgresql-contrib nginx curl
@@ -126,7 +126,7 @@ cd ..
 ```
 ### No seu computador local, adicione o bare como remoto
 ```
-git remote add app_bare root@ip_da_vps:~/app_bare
+git remote add app_bare_nomedoprojeto root@ip_da_vps:~/app_bare_nomedoprojeto
 ```
 ```
 git push app_bare <branch>
@@ -142,12 +142,6 @@ git pull origin <branch>
 # 6 - Crie um ambiente virtual
 
 ```
-cd  ~/app_repo_nomedoprojeto
-```
-```
-git pull origin <branch>
-```
-```
 python3 -m venv venv
 ```
 ```
@@ -157,8 +151,13 @@ python3 -m venv venv
 pip install -r requirements.txt
 ```
 ```
-pip install psycopg2
+pip install psycopg2-binary
 ```
 ```
 pip install gunicorn
+```
+
+## Agora se tudo deu certo quando rodamos esse comando é para o servidor subir
+```
+python manage.py runserver
 ```
