@@ -161,3 +161,19 @@ pip install gunicorn
 ```
 python manage.py runserver
 ```
+
+# 7 - conectar o banco de dados com a aplicação
+
+### Crie suas variaveis de ambiente e salve em um arquivo, por exemplo .env-example
+
+### Suba esse arquivo para o servidor e faça esses comandos
+
+```
+cd ~/app_repo_nomedoprojeto
+```
+```
+cp .env-example .env
+```
+```
+nano .env
+```
