@@ -206,15 +206,15 @@ python manage.py runserver
 
 ### Subistitua
 
-#### __GUNICORN_FILE_NAME__ para o nome do arquivo gunicorn que você deseja
-#### __YOUR_USER__ para seu nome de usuário
-#### __PROJECT_FOLDER__ para o nome da pasta do seu projeto (app_repo_nomedoprojeto)
-#### __WSGI_FOLDER__ para o nome da pasta onde você encontra um arquivo chamado wsgi.py
+#### ___GUNICORN_FILE_NAME___ para o nome do arquivo gunicorn que você deseja
+#### ___YOUR_USER___ para seu nome de usuário
+#### ___PROJECT_FOLDER___ para o nome da pasta do seu projeto (app_repo_nomedoprojeto)
+#### ___WSGI_FOLDER___ para o nome da pasta onde você encontra um arquivo chamado wsgi.py
 
 
-#### Crie o arquivo __GUNICORN_FILE_NAME__.socket
+#### Crie o arquivo ___GUNICORN_FILE_NAME___.socket
 ```
-sudo nano /etc/systemd/system/__GUNICORN_FILE_NAME__.socket
+sudo nano /etc/systemd/system/___GUNICORN_FILE_NAME___.socket
 ```
 ### Coloque esse conteúdo e salve
 
@@ -223,40 +223,40 @@ sudo nano /etc/systemd/system/__GUNICORN_FILE_NAME__.socket
 Description=gunicorn blog socket
 
 [Socket]
-ListenStream=/run/__GUNICORN_FILE_NAME__.socket
+ListenStream=/run/___GUNICORN_FILE_NAME___.socket
 
 [Install]
 WantedBy=sockets.target
 ```
 
-### Crie o arquivo __GUNICORN_FILE_NAME__.service
+### Crie o arquivo ___GUNICORN_FILE_NAME___.service
 ```
-sudo nano /etc/systemd/system/__GUNICORN_FILE_NAME__.service
+sudo nano /etc/systemd/system/___GUNICORN_FILE_NAME___.service
 ```
 ### Coloque esse conteúdo e salve
 
 ```
 [Unit]
 Description=Gunicorn daemon
-Requires=__GUNICORN_FILE_NAME__.socket
+Requires=___GUNICORN_FILE_NAME___.socket
 After=network.target
 
 [Service]
-User=__YOUR_USER__
+User=___YOUR_USER___
 Group=www-data
 Restart=on-failure
-EnvironmentFile=/__YOUR_USER__/__PROJECT_FOLDER__/.env
-WorkingDirectory=/__YOUR_USER__/__PROJECT_FOLDER__
+EnvironmentFile=/___YOUR_USER___/___PROJECT_FOLDER___/.env
+WorkingDirectory=/___YOUR_USER___/___PROJECT_FOLDER___
 
-ExecStart=/__YOUR_USER__/__PROJECT_FOLDER__/venv/bin/gunicorn \
-          --error-logfile /__YOUR_USER__/__PROJECT_FOLDER__/gunicorn-error-log \
+ExecStart=/___YOUR_USER___/___PROJECT_FOLDER___/venv/bin/gunicorn \
+          --error-logfile /___YOUR_USER___/___PROJECT_FOLDER___/gunicorn-error-log \
           --enable-stdio-inheritance \
           --log-level "debug" \
           --capture-output \
           --access-logfile - \
           --workers 6 \
-          --bind unix:/run/__GUNICORN_FILE_NAME__.socket \
-          __WSGI_FOLDER__.wsgi:application
+          --bind unix:/run/___GUNICORN_FILE_NAME___.socket \
+          ___WSGI_FOLDER___.wsgi:application
 
 [Install]
 WantedBy=multi-user.target
@@ -264,32 +264,32 @@ WantedBy=multi-user.target
 
 # Agora vamos ativar
 ```
-sudo systemctl start __GUNICORN_FILE_NAME__.socket`
+sudo systemctl start ___GUNICORN_FILE_NAME___.socket`
 ```
 ```
-sudo systemctl enable __GUNICORN_FILE_NAME__.socket
+sudo systemctl enable ___GUNICORN_FILE_NAME___.socket
 ```
 
 # Verifique se tudo deu certo
 ```
-sudo systemctl status __GUNICORN_FILE_NAME__.socket
+sudo systemctl status ___GUNICORN_FILE_NAME___.socket
 ```
 ```
-curl --unix-socket /run/__GUNICORN_FILE_NAME__.socket localhost
+curl --unix-socket /run/___GUNICORN_FILE_NAME___.socket localhost
 ```
 ```
-sudo systemctl status __GUNICORN_FILE_NAME__
+sudo systemctl status ___GUNICORN_FILE_NAME___
 ```
 
 # Reinicie 
 ```
-sudo systemctl restart __GUNICORN_FILE_NAME__.service
+sudo systemctl restart ___GUNICORN_FILE_NAME___.service
 ```
 ```
-sudo systemctl restart __GUNICORN_FILE_NAME__.socket
+sudo systemctl restart ___GUNICORN_FILE_NAME___.socket
 ```
 ```
-sudo systemctl restart __GUNICORN_FILE_NAME__
+sudo systemctl restart ___GUNICORN_FILE_NAME___
 ```
 
 ### Se você precisar alterar algum arquivo rode esse comando para recarega os arquivos
@@ -299,8 +299,8 @@ sudo systemctl daemon-reload
 
 # Debugging
 ```
-sudo journalctl -u __GUNICORN_FILE_NAME__.service
+sudo journalctl -u ___GUNICORN_FILE_NAME___.service
 ```
 ```
-sudo journalctl -u __GUNICORN_FILE_NAME__.socket
+sudo journalctl -u ___GUNICORN_FILE_NAME___.socket
 ```
