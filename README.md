@@ -48,7 +48,7 @@ CREATE DATABASE nomedobanco;
 ```
 CREATE USER nomedousuário WITH PASSWORD 'suasenha';
 ```
-### Modifique alguns parâmetros de conexão para o usuário que acabamos de criar
+#### Modifique alguns parâmetros de conexão para o usuário que acabamos de criar
 ```
 ALTER ROLE nomedousuário SET client_encoding TO 'utf8';
 ```
