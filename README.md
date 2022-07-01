@@ -26,10 +26,13 @@ sudo apt install build-essential -y
 sudo apt install python3-pip python3-dev libpq-dev python3-venv
 ```
 ```
-postgresql postgresql-contrib nginx curl
+sudo apt install postgresql postgresql-contrib nginx curl
 ```
 ```
 sudo apt install certbot python3-certbot-nginx -y
+```
+```
+sudo apt-get install ufw
 ```
 ```
 sudo apt install git
@@ -45,25 +48,25 @@ sudo -u postgres psql
 ### Crie o banco de dados
 
 ```
-CREATE DATABASE nomedobanco;
+CREATE DATABASE <nomedobanco>;
 ```
 ### Crie um usuário de banco de dados
 ```
-CREATE USER nomedousuário WITH PASSWORD 'suasenha';
+CREATE USER <usuário> WITH PASSWORD '<senha>';
 ```
 ### Modifique alguns parâmetros de conexão para o usuário que acabamos de criar
 ```
-ALTER ROLE nomedousuário SET client_encoding TO 'utf8';
+ALTER ROLE <usuário> SET client_encoding TO 'utf8';
 ```
 ```
-ALTER ROLE nomedousuário SET default_transaction_isolation TO 'read committed';
+ALTER ROLE <usuário> SET default_transaction_isolation TO 'read committed';
 ```
 ```
-ALTER ROLE nomedousuário SET timezone TO 'UTC';
+ALTER ROLE <usuário> SET timezone TO 'UTC';
 ```
 ### Agora vamos da acesso ao novo usuário para administrar o novo banco de dados
 ```
-GRANT ALL PRIVILEGES ON DATABASE nomedobanco TO nomedousuário;
+GRANT ALL PRIVILEGES ON DATABASE <nomedobanco> TO <usuário>;
 ```
 ### Saia do prompt do PostgreSQL
 ```
@@ -77,10 +80,10 @@ sudo systemctl restart postgresql
 ### 4 - Configure o git
 
 ```
-git config --global user.name 'Seu nome'
+git config --global user.name '<nome>'
 ```
 ```
-git config --global user.email 'seu_email@gmail.com'
+git config --global user.email '<email>'
 ```
 ```
 git config --global init.defaultBranch main
@@ -91,10 +94,10 @@ git config --global init.defaultBranch main
 ### Um repositório bare é um repositório transitório (como se fosse um github).
 
 ```
-mkdir -p ~/app_bare_nomedoprojeto
+mkdir -p ~/app_bare_<nomedoprojeto>
 ```
 ```
-cd ~/app_bare
+cd ~/app_bare_<nomedoprojeto>
 ```
 ```
 git init --bare
@@ -104,16 +107,16 @@ cd ..
 ```
 ### Crie o repositório da aplicação
 ```
-mkdir -p ~/app_repo_nomedoprojeto
+mkdir -p ~/app_repo_<nomedoprojeto>
 ```
 ```
-cd ~/app_repo_nomedoprojeto
+cd ~/app_repo_<nomedoprojeto>
 ```
 ```
 git init
 ```
 ```
-git remote add origin ~/app_bare_nomedoprojeto
+git remote add origin ~/app_bare_<nomedoprojeto>
 ```
 ```
 git add . 
@@ -126,14 +129,14 @@ cd ..
 ```
 ### No seu computador local, adicione o bare como remoto
 ```
-git remote add app_bare_nomedoprojeto root@ip_da_vps:~/app_bare_nomedoprojeto
+git remote add app_bare_<nomedoprojeto> root@ip_da_vps:~/app_bare_<nomedoprojeto>
 ```
 ```
-git push app_bare <branch>
+git push app_bare_<nomedoprojeto> <branch>
 ```
 ### No servidor, em app_repo, faça pull:
 ```
-cd ~/app_repo_nomedoprojeto
+cd ~/app_repo_<nomedoprojeto>
 ```
 ```
 git pull origin <branch>
@@ -151,25 +154,8 @@ python3 -m venv venv
 pip install -r requirements.txt
 ```
 ```
-pip install psycopg2 psycopg2-binary
+pip install psycopg2-binary
 ```
-### Se de erro ao instalar o psycopg2 executer esses comandos
-```
-pip uninstall psycopg2
-```
-```
-pip list --outdated
-```
-```
-pip install --upgrade wheel
-```
-```
-pip install --upgrade setuptools
-```
-```
-pip install psycopg2
-```
-### Pronto agora é para ter dado tudo certo na instalação do psycopg2
 ```
 pip install gunicorn
 ```
@@ -186,7 +172,7 @@ python manage.py runserver
 ### Suba esse arquivo para o servidor e faça esses comandos
 
 ```
-cd ~/app_repo_nomedoprojeto
+cd ~/app_repo_<nomedoprojeto>
 ```
 ```
 cp .env-example .env
@@ -207,28 +193,28 @@ python manage.py runserver
 ### Subistitua
 
 ```
-__GUNICORN_FILE_NAME__ para o nome do arquivo gunicorn que você deseja
+<gunicorn> para o nome do arquivo gunicorn que você deseja
 ```
 ### Você pode conferir seu nome de usuário com esse comando
 ```
 whoami
 ```
 ```
-__YOUR_USER__ para seu nome de usuário
+<user> para seu nome de usuário
 ```
 ### No caso seria app_repo_nomedoprojeto
 ```
-__PROJECT_FOLDER__ para o nome da pasta do seu projeto repo
+<projeto> para o nome da pasta do seu projeto repo
 ```
 ### Seria a pasta do seu projeto django
 ```
-__WSGI_FOLDER__ para o nome da pasta onde você encontra um arquivo chamado wsgi.py
+<wsgi> para o nome da pasta onde você encontra um arquivo chamado wsgi.py
 ```
 
 
-### Crie o arquivo __GUNICORN_FILE_NAME__.socket
+### Crie o arquivo <gunicorn>.socket
 ```
-sudo nano /etc/systemd/system/__GUNICORN_FILE_NAME__.socket
+sudo nano /etc/systemd/system/<gunicorn>.socket
 ```
 ### Coloque esse conteúdo e salve
 
@@ -237,33 +223,33 @@ sudo nano /etc/systemd/system/__GUNICORN_FILE_NAME__.socket
 Description=gunicorn blog socket
 
 [Socket]
-ListenStream=/run/__GUNICORN_FILE_NAME__.socket
+ListenStream=/run/<gunicorn>.socket
 
 [Install]
 WantedBy=sockets.target
 ```
 
-### Crie o arquivo __PROJECT_FOLDER__.service
+### Crie o arquivo <gunicorn>.service
 ```
-sudo nano /etc/systemd/system/__GUNICORN_FILE_NAME__.service
+sudo nano /etc/systemd/system/<gunicorn>.service
 ```
 ### Coloque esse conteúdo e salve
 
 ```
 [Unit]
 Description=gunicorn daemon
-Requires=__GUNICORN_FILE_NAME__.socket
+Requires=<gunicorn>.socket
 After=network.target
 
 [Service]
-User=__YOUR_USER__
+User=<user>
 Group=www-data
-WorkingDirectory=/__YOUR_USER__/__PROJECT_FOLDER__
-ExecStart=/__YOUR_USER__/__PROJECT_FOLDER__/venv/bin/gunicorn \
+WorkingDirectory=/<user>/<projeto>
+ExecStart=/__YOUR_USER__/<projeto>/venv/bin/gunicorn \
           --access-logfile - \
           --workers 3 \
-          --bind unix:/run/__PROJECT_FOLDER__.sock \
-          __WSGI_FOLDER__.wsgi:application
+          --bind unix:/run/<projeto>.socket \
+          <wsgi>.wsgi:application
 
 [Install]
 WantedBy=multi-user.target
@@ -271,47 +257,47 @@ WantedBy=multi-user.target
 
 ### Agora vamos ativar
 ```
-sudo systemctl start __GUNICORN_FILE_NAME__.socket
+sudo systemctl start <gunicorn>.socket
 ```
 ```
-sudo systemctl enable __GUNICORN_FILE_NAME__.socket
+sudo systemctl enable <gunicorn>.socket
 ```
 
 ### Verifique se tudo deu certo
 ```
-sudo systemctl status __GUNICORN_FILE_NAME__.socket
+sudo systemctl status <gunicorn>.socket
 ```
 ```
-sudo systemctl status __GUNICORN_FILE_NAME__.service
+sudo systemctl status <gunicorn>.service
 ```
 ```
-sudo systemctl status __GUNICORN_FILE_NAME__
+sudo systemctl status <gunicorn>
 
 ```
 ### Verifique a existência do gunicorn.sock arquivo dentro do /run
 ```
-file /run/__GUNICORN_FILE_NAME__.sock
+file /run/<gunicorn>.sock
 ```
 
 ### Execute esse comando para enviar uma conexção ao socket curl, em seguir você deve receber a saída HTML do seu aplicativo no terminal
 ```
-curl --unix-socket /run/__GUNICORN_FILE_NAME__.socket localhost
+curl --unix-socket /run/<gunicorn>.socket localhost
 ```
 
 ### Se o systemctl status ou curl indicou erro você pode usar esse comando para saber o que aconteceu 
 ```
-sudo journalctl -u __GUNICORN_FILE_NAME__.socket
+sudo journalctl -u <gunicorn>.sock
 ```
 
 ### Se precisar reiniciar
 ```
-sudo systemctl restart __GUNICORN_FILE_NAME__.service
+sudo systemctl restart <gunicorn>.service
 ```
 ```
-sudo systemctl restart __GUNICORN_FILE_NAME__.socket
+sudo systemctl restart <gunicorn>.socket
 ```
 ```
-sudo systemctl restart __GUNICORN_FILE_NAME__
+sudo systemctl restart <gunicorn>
 ```
 
 ### Se você precisar alterar algum arquivo rode esse comando para recarega os arquivos
@@ -319,15 +305,15 @@ sudo systemctl restart __GUNICORN_FILE_NAME__
 sudo systemctl daemon-reload
 ```
 ```
-sudo systemctl restart gunicorn
+sudo systemctl restart <gunicorn>
 ```
 
 ### Para debugar
 ```
-sudo journalctl -u __GUNICORN_FILE_NAME__.service
+sudo journalctl -u <gunicorn>.service
 ```
 ```
-sudo journalctl -u __GUNICORN_FILE_NAME__.socket
+sudo journalctl -u <gunicorn>.socket
 ```
 
 # 9 - Confugurando o Nginx
@@ -335,96 +321,90 @@ sudo journalctl -u __GUNICORN_FILE_NAME__.socket
 ### Subistitua
 
 ### Substitua pelo seu domínio
-
 ```
-___REPLACE_ME_WITH_YOUR_OWN_DOMAIN___ 
-
-```
-### Substitua pelo caminho para a pasta do projeto
-```
-___PROJECT_FOLDER___ 
-
+<dominio>
 ```
 ### Substitua pelo caminho para a pasta de arquivos estáticos
 ```
-___STATIC_FOLDER_PATH___ 
-
+<static>
 ```
 ### Substitua pelo caminho para a pasta de arquivos de mídia
 ```
-___MEDIA_FOLDER_PATH___ 
-
+<media> 
 ```
-### Substitua pelo nome do soquete unix
+### Substitua pelo nome do arquivo <gunicorn>.socket que foi criado
 ```
-___SOCKET_NAME___ 
-
+<gunicorn>
 ```
 
 ```
 server {
-  listen 80;
-  listen [::]:80;
-  server_name ___REPLACE_ME_WITH_YOUR_OWN_DOMAIN___;
+    listen 80;
+    server_name <dominio>;
 
-  index index.html index.htm index.nginx-debian.html index.php;
-  
-  location /static {
-    autoindex on;
-    alias ___STATIC_FOLDER_PATH___;
-  }
+    location = /favicon.ico {
+        access_log off;
+        log_not_found off;
+    }
 
-  location /media {
-    autoindex on;
-    alias ___MEDIA_FOLDER_PATH___;
-  }
+    location /static/ {
+        root <static>;
+    }
 
-  location / {
-    proxy_pass http://unix:/run/___SOCKET_NAME___;
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection 'upgrade';
-    proxy_set_header Host $host;
-    proxy_cache_bypass $http_upgrade;
-  }
+    location /media/ {
+        root <static>;
+    }
 
-  location ~ /\.ht {
-    deny all;
-  }
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/run/<gunicorn>.socket;
+    }
 
-  location ~ /\. {
-    access_log off;
-    log_not_found off;
-    deny all;
-  }
-
-  gzip on;
-  gzip_disable "msie6";
-
-  gzip_comp_level 6;
-  gzip_min_length 1100;
-  gzip_buffers 4 32k;
-  gzip_proxied any;
-  gzip_types
-    text/plain
-    text/css
-    text/js
-    text/xml
-    text/javascript
-    application/javascript
-    application/x-javascript
-    application/json
-    application/xml
-    application/rss+xml
-    image/svg+xml;
-
-  access_log off;
- 
-  error_log   /var/log/nginx/___REPLACE_ME_WITH_YOUR_OWN_DOMAIN___-error.log;
 }
 ```
 
-### Se precisar mudar o timezone do servidor 
+### Agora crie o arquivo nginx e cole o o código a cima depois de subistituir
+```
+sudo nano /etc/nginx/sites-available/<nomedoarquivo>
+```
+
+### Excluar o arquivo default
+```
+sudo rm /etc/nginx/sites-available/default
+```
+###  Agora, vamos habilitar o arquivo vinculando-o ao sites-enabled
+```
+sudo ln -s /etc/nginx/sites-available/<nomedoarquivo> /etc/nginx/sites-enabled/
+```
+### Precisamos abrir nosso firewall para o tráfego normal na porta 80
+```
+sudo ufw allow 'Nginx Full'
+```
+### Teste se tudo deu certo 
+```
+sudo nginx -t
+```
+### Agora reiniciei o nginx
+```
+sudo systemctl restart nginx
+```
+
+### Se precisar mudar o timezone do servidor e depois reiniciei o servidor
 ```
 sudo timedatectl set-timezone <timezone>
+```
+```
+sudo reboot
+```
+
+# 10 - Configurando as collectstatic
+
+```
+gpasswd -a www-data username
+```
+```
+chmod g+x /username && chmod g+x /username/test && chmod g+x /username/test/static
+```
+```
+nginx -s reload
 ```
