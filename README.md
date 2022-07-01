@@ -332,7 +332,7 @@ sudo journalctl -u <gunicorn>.socket
 ```
 <media> 
 ```
-### Substitua pelo nome do arquivo <\gunicorn>.socket que foi criado
+### Substitua pelo nome do arquivo .socket que foi criado
 ```
 <gunicorn>
 ```
@@ -393,8 +393,9 @@ sudo systemctl restart nginx
 
 # 10 - Configurando as collectstatic
 
-### Agora que acessou seu site verá que está sem estilo
+## Agora que acessou seu site verá que está sem estilo
 
+### Acesse a pasta
 ```
 cd ~/app_repo_<nomedoprojeto>
 ```
