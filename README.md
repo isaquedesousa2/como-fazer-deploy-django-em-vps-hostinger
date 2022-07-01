@@ -245,7 +245,7 @@ After=network.target
 User=<user>
 Group=www-data
 WorkingDirectory=/<user>/<projeto>
-ExecStart=/__YOUR_USER__/<projeto>/venv/bin/gunicorn \
+ExecStart=/<user>/<projeto>/venv/bin/gunicorn \
           --access-logfile - \
           --workers 3 \
           --bind unix:/run/<projeto>.socket \
@@ -336,7 +336,10 @@ sudo journalctl -u <gunicorn>.socket
 ```
 <gunicorn>
 ```
-
+### Agora crie o arquivo nginx e cole o o código a cima depois de subistituir
+```
+sudo nano /etc/nginx/sites-available/<nomedoarquivo>
+```
 ```
 server {
     listen 80;
@@ -363,10 +366,7 @@ server {
 }
 ```
 
-### Agora crie o arquivo nginx e cole o o código a cima depois de subistituir
-```
-sudo nano /etc/nginx/sites-available/<nomedoarquivo>
-```
+
 
 ### Excluar o arquivo default
 ```
