@@ -391,7 +391,7 @@ sudo systemctl restart nginx
 
 ### Agora acesse seu ip ou dominio e seu site estara no ar
 
-# 10 - Configurando as collectstatic
+# 10 - Configurando collectstatic (se necessário)
 
 ## Agora que acessou seu site verá que está sem estilo
 
