@@ -389,16 +389,27 @@ sudo nginx -t
 sudo systemctl restart nginx
 ```
 
-### Se precisar mudar o timezone do servidor e depois reiniciei o servidor
-```
-sudo timedatectl set-timezone <timezone>
-```
-```
-sudo reboot
-```
+### Agora acesse seu ip ou dominio e seu site estara no ar
 
 # 10 - Configurando as collectstatic
 
+### Agora que acessou seu site verá que está sem estilo
+
+```
+cd ~/app_repo_<nomedoprojeto>
+```
+### Certifique-se de que o caminho do STATIC_ROOT em settings.py é o mesmo que você referenciou na configuração do nginx 
+```
+python manage.py collectstatic
+```
+### Agora volte no site e pronto
+
+## Se você receber um erro de porta tente desativar o apache
+```
+sudo apachectl stop
+```
+
+## Agora se for um erro de permissão faça assim
 ```
 gpasswd -a www-data username
 ```
@@ -407,4 +418,14 @@ chmod g+x /username && chmod g+x /username/test && chmod g+x /username/test/stat
 ```
 ```
 nginx -s reload
+```
+
+
+
+### Se precisar mudar o timezone do servidor e depois reiniciei o servidor
+```
+sudo timedatectl set-timezone <timezone>
+```
+```
+sudo reboot
 ```
