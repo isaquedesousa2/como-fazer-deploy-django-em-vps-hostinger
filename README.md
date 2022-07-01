@@ -276,7 +276,7 @@ sudo systemctl status <gunicorn>
 ```
 ### Verifique a existência do gunicorn.sock arquivo dentro do /run
 ```
-file /run/<gunicorn>.sock
+file /run/<gunicorn>.socket
 ```
 
 ### Execute esse comando para enviar uma conexção ao socket curl, em seguir você deve receber a saída HTML do seu aplicativo no terminal
@@ -286,7 +286,7 @@ curl --unix-socket /run/<gunicorn>.socket localhost
 
 ### Se o systemctl status ou curl indicou erro você pode usar esse comando para saber o que aconteceu 
 ```
-sudo journalctl -u <gunicorn>.sock
+sudo journalctl -u <gunicorn>.socket
 ```
 
 ### Se precisar reiniciar
@@ -332,11 +332,11 @@ sudo journalctl -u <gunicorn>.socket
 ```
 <media> 
 ```
-### Substitua pelo nome do arquivo <gunicorn>.socket que foi criado
+### Substitua pelo nome do arquivo <\gunicorn>.socket que foi criado
 ```
 <gunicorn>
 ```
-### Agora crie o arquivo nginx e cole o o código a cima depois de subistituir
+### Agora crie o arquivo nginx e cole o o código a abaixo depois de subistituir
 ```
 sudo nano /etc/nginx/sites-available/<nomedoarquivo>
 ```
